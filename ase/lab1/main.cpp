@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <list>
 #include <iterator> 
 
 #include "Coordinate.h"
@@ -23,20 +24,22 @@ void swapCoordinates(Coordinate* & first, Coordinate* & second)
     second = swap;
 }
 
-std::ostream & operator<<(std::ostream & os, const std::vector<int> & vec)
+// This still isn't working...
+template < typename dataType, template < typename > class containerType>
+std::ostream & operator<<(std::ostream & os, const containerType<dataType> & container)
 {
     os << '[';
     
-    int size = vec.size();
+    int size = container.size();
     for (int i = 0; i != size; i++)
     {
         if (i == size -1)
         {
-            os << vec[i];
+            os << container.at(i);
         }
         else
         {
-            os << vec[i] << ',';
+            os << container.at(i) << ',';
         }
         
     }
@@ -96,9 +99,12 @@ int main ()
 
 
 
-    // Overloading Stream Insertion
-    std::vector<int> vec = {1, 2, 3};
-    std::cout << vec << std::endl;
+    // Overloading Stream Insertion and function templating
+    std::list<int> integerList = {1, 2, 3};
+    std::cout << integerList;// << std::endl;
+
+    std::vector<std::string> stringVec = {"String1", "String2", "String3"};
+    std::cout << stringVec << std::endl;
 
     return 0;
 }

@@ -38,6 +38,11 @@
         "sstream": "cpp",
         "stdexcept": "cpp",
         "streambuf": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "cerrno": "cpp",
+        "iterator": "cpp",
+        "ios": "cpp",
+        "queue": "cpp",
+        "random": "cpp"
     }
 }
