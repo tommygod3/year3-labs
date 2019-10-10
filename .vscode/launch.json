@@ -8,7 +8,7 @@
             "name": "g++ build and debug all files",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "program": "${workspaceFolder}/ase/bin/${fileBasenameNoExtension}",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -22,14 +22,14 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "g++ build all files",
+            "preLaunchTask": "g++ build all files in current dir",
             "miDebuggerPath": "/usr/bin/gdb"
         },
         {
             "name": "g++ build and debug active file",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "program": "${workspaceFolder}/ase/bin/${fileBasenameNoExtension}",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
