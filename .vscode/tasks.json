@@ -5,13 +5,13 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "g++ build all files",
+            "label": "g++ build all files in current dir",
             "command": "/usr/bin/g++",
             "args": [
                 "-g",
                 "${fileDirname}/*.cpp",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "${workspaceFolder}/ase/bin/${fileBasenameNoExtension}"
             ],
             "options": {
                 "cwd": "/usr/bin"
@@ -29,7 +29,7 @@
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "${workspaceFolder}/ase/bin/${fileBasenameNoExtension}"
             ],
             "options": {
                 "cwd": "/usr/bin"

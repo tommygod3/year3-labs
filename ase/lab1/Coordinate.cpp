@@ -15,3 +15,10 @@ bool Coordinate::isEqual(Coordinate first, Coordinate second)
 {
     return (first.x == second.x) && (first.y == second.y);
 }
+
+Coordinate Coordinate::operator+(Coordinate otherCoordinate)
+{
+    int sumX = this->x + otherCoordinate.x;
+    int sumY = this->y + otherCoordinate.y;
+    return Coordinate(sumX, sumY);
+}

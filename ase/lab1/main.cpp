@@ -1,4 +1,7 @@
 #include <iostream>
+#include <vector>
+#include <list>
+#include <iterator> 
 
 #include "Coordinate.h"
 
@@ -12,6 +15,38 @@ int recursiveFactorial(int i)
     {
         return i * recursiveFactorial(i-1);
     }
+}
+
+void swapCoordinates(Coordinate* & first, Coordinate* & second)
+{
+    Coordinate* swap = first;
+    first = second;
+    second = swap;
+}
+
+// This still isn't working...
+template < typename dataType, template < typename > class containerType>
+std::ostream & operator<<(std::ostream & os, const containerType<dataType> & container)
+{
+    os << '[';
+    
+    int size = container.size();
+    for (int i = 0; i != size; i++)
+    {
+        if (i == size -1)
+        {
+            os << container.at(i);
+        }
+        else
+        {
+            os << container.at(i) << ',';
+        }
+        
+    }
+
+    os << ']';
+
+    return os;
 }
 
 int main ()
@@ -40,9 +75,36 @@ int main ()
     {
         std::cout << "Different coordinate"  << std::endl;
     }
-    
-    delete pointerLocation;
 
+    Coordinate* specialLocation = new Coordinate(50, 150);
+
+    swapCoordinates(pointerLocation, specialLocation);
+    pointerLocation->display();
+    specialLocation->display();
+
+    Coordinate summedLocation = *pointerLocation + *specialLocation;
+    summedLocation.display();
+    
+    
+    Coordinate fromPointer = *specialLocation;
+    Coordinate* fromVariable = &myLocation;
+
+    fromPointer.display();
+    fromVariable->display();
+
+    delete pointerLocation;
+    delete specialLocation;
+    // Do not need to delete fromVariable as it the data is not allocated with new
+
+
+
+
+    // Overloading Stream Insertion and function templating
+    std::list<int> integerList = {1, 2, 3};
+    std::cout << integerList;// << std::endl;
+
+    std::vector<std::string> stringVec = {"String1", "String2", "String3"};
+    std::cout << stringVec << std::endl;
 
     return 0;
 }

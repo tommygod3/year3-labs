@@ -14,4 +14,12 @@ struct Coordinate
 
     // Static member function
     static bool isEqual(Coordinate, Coordinate);
+
+    // Operator overloading
+    Coordinate operator+(Coordinate);
+    // why only 1 arg?
+    // is this because it is a member function?
+    // Should this be a member function?
+
+
 };
