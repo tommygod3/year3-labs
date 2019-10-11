@@ -39,5 +39,6 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "typeinfo": "cpp"
-    }
+    },
+    "python.pythonPath": "/home/vagrant/miniconda3/envs/ai-labs/bin/python"
 }
