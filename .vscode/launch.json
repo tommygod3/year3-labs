@@ -6,6 +6,12 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - Prac2",
+            "request": "launch",
+            "mainClass": "Prac2"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - myID",
             "request": "launch",
             "mainClass": "myID"
