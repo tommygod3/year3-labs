@@ -4,6 +4,7 @@
  */
 
 import java.io.*;
+import java.util.Scanner;
 
 public class myID
 {
@@ -26,12 +27,12 @@ public class myID
     private static String getInputString(String prompt)
     {
         String result = "";
-        InputStreamReader isr = new InputStreamReader(System.in);
-        BufferedReader br = new BufferedReader(isr);
+
+        Scanner sUser = new Scanner(System.in);
         try
         {
             System.out.println(prompt);
-            result = br.readLine();
+            result = sUser.nextLine();
         } 
         catch(IOException e)
         {
@@ -44,8 +45,7 @@ public class myID
     {
         myID id = new myID();
 
-        InputStreamReader isr = new InputStreamReader(System.in);
-        BufferedReader br = new BufferedReader(isr);
+        Scanner sUser = new Scanner(System.in);
         int result;
 
         while(true)
@@ -53,7 +53,7 @@ public class myID
             System.out.println("\nSelect from the following options:\n[1] print Name\n[2] print Email\n[3] print Module\n[4] quit program");
             try
             {
-                result = Integer.parseInt(br.readLine());
+                result = sUser.nextInt();
                 switch(result)
                 {
                     case 1:
