@@ -5,6 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "CodeLens (Launch) - myID",
+            "request": "launch",
+            "mainClass": "myID"
+        },
+        {
             "name": "g++ build and debug all files",
             "type": "cppdbg",
             "request": "launch",
