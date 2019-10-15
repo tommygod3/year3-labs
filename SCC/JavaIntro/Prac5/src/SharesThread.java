@@ -11,11 +11,11 @@ public class SharesThread extends Thread
     {
         while(true) {
             Random rn = new Random(); //random number generator
-            int newPrice = rn.nextInt(50);
+            int newPrice = rn.nextInt(this.maxValue);
             Shares.shareprice = newPrice; //set shareValue in main class
             System.out.println("Price changed to " + newPrice);
             try {
-                this.sleep(frequency);
+                Thread.sleep(frequency);
             } catch(java.lang.InterruptedException ie){}; //delay fluctuation*/
         }
     }

@@ -14,7 +14,7 @@ public class BuyerThread extends Thread
         {
             try
             {
-                this.sleep(1000);
+                Thread.sleep(1000);
             }
             catch(java.lang.InterruptedException ie){}; //delay fluctuation*/
             if(this.sharePrices.size() > 9)
