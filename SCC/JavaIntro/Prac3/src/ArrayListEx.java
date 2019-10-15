@@ -25,9 +25,9 @@ public class ArrayListEx
       }
 
       // create a sort object
-      MaxStr myMaxStr = new MaxStr();
+      //MaxStr myMaxStr = new MaxStr();
       // call the findMax function to find the longest String
-      String longestStr = myMaxStr.findMax(s);
+      String longestStr = MaxStr.findMax(s);
       // print the mximum
       System.out.println("The longest String is: " + longestStr);
 
