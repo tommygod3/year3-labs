@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - ManagerTest",
+            "request": "launch",
+            "mainClass": "ManagerTest",
+            "projectName": "year3-labs_c30d82b2"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - ArrayListEx",
             "request": "launch",
             "mainClass": "ArrayListEx"

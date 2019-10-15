@@ -18,10 +18,20 @@ public class ManagerTest
       for (i = 0; i < 3; i++) staff[i].raiseSalary(5);
       for (i = 0; i < 3; i++) staff[i].print();
 
+      for(Employee employee : staff)
+      {
+         System.out.println(employee.calculatePension());
+      }
+
    }
 }
 
-class Employee
+interface PensionScheme
+{
+   public double calculatePension();
+}
+
+class Employee implements PensionScheme
 {  public Employee(String n, double s, Day d)
    {  name = n;
       salary = s;
@@ -36,6 +46,14 @@ class Employee
    }
    public int hireYear()
    {  return hireDay.getYear();
+   }
+
+   public double calculatePension()
+   {
+      Day today = new Day();
+      int difference = today.daysBetween(this.hireDay);
+      double months = difference / 12;
+      return months * this.salary;
    }
 
    private String name;
