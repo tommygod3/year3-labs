@@ -3,9 +3,6 @@ import java.io.*;
 public class ManagerTest
 {  public static void main(String[] args)
    {
-      InputStreamReader isr = null;
-      BufferedReader br = null;
-
       Employee[] staff = new Employee[3];
 
       staff[0] = new Employee("Harry Hacker", 35000,
