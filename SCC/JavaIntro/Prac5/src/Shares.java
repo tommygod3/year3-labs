@@ -10,11 +10,15 @@ public class Shares {
         final int maxValue = 100; //maximum share value in the exchange
     
         SharesThread sth = new SharesThread(maxValue); //thread randomising share price
-        sth.start();;
+        BuyerThread buyer = new BuyerThread();
+
+        sth.start();
+        buyer.start();
+
         for (int i = 0; i< checks; i++)
         {
             try {
-                System.out.println("price = " + shareprice);
+                System.out.println("Current price = " + shareprice);
                 Thread.sleep(1000*delay);
             }
             catch(java.lang.InterruptedException ie){};

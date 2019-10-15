@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - Shares",
+            "request": "launch",
+            "mainClass": "Shares",
+            "projectName": "year3-labs_c30d82b2"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - ManagerTest",
             "request": "launch",
             "mainClass": "ManagerTest",

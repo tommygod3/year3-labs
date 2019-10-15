@@ -1,4 +1,3 @@
-
 import java.util.Random;
 
 public class SharesThread extends Thread
@@ -8,11 +7,13 @@ public class SharesThread extends Thread
         this.maxValue = maxValue;
     }
     
-    public  void fluctuatePrice()
+    public void fluctuatePrice()
     {
         while(true) {
             Random rn = new Random(); //random number generator
-            Shares.shareprice = rn.nextInt(50); //set shareValue in main class
+            int newPrice = rn.nextInt(50);
+            Shares.shareprice = newPrice; //set shareValue in main class
+            System.out.println("Price changed to " + newPrice);
             try {
                 this.sleep(frequency);
             } catch(java.lang.InterruptedException ie){}; //delay fluctuation*/
