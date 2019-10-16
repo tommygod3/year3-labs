@@ -47,24 +47,6 @@ void BST::insertRec(Key key, Item item, Node* & current)
 
 BST::Item* BST::lookup(Key key)
 {
-    // Node* node = root;
-    // while (node->key != key)
-    // {
-    //     if (isLeaf(node))
-    //     {
-    //         return nullptr;
-    //     }
-    //     if (key < node->key)
-    //     {
-    //         node = node->leftChild;
-    //     }
-    //     else if (key > node->key)
-    //     {
-    //         node = node->rightChild;
-    //     }
-    // }
-    // return &node->item;
-    
     return lookupRec(key, root);
 }
 
