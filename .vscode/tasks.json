@@ -48,7 +48,8 @@
                 "-g",
                 "${fileDirname}/*.cpp",
                 "-o",
-                "${workspaceFolder}/ase/bin/${fileBasenameNoExtension}"
+                "${workspaceFolder}/ase/bin/${fileBasenameNoExtension}",
+                "-lboost_unit_test_framework"
             ],
             "options": {
                 "cwd": "/usr/bin"
