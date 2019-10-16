@@ -1,13 +1,12 @@
+#include "BST.hpp"
+
 int main ()
 {
-    int x = 10;
-    int* y = &x;
-    int* z = new int(10);
-    x++;
+    BST test;
 
+    test.insert(1, "h");
 
-    delete z;
-    //would break if: delete y;
-
+    std::cout << *test.lookup(1);
+    
     return 0;
 }
