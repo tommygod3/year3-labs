@@ -22,19 +22,27 @@ struct BST::Node
 
 void BST::insert(Key key, Item item)
 {
-    if (isLeaf(root))
-    {
-        root = new Node(key, item);
-    }
-    else
-    {
-        Item* location = lookup(key);
-    }
+    insertRec(key, item, root);
 }
 
 void BST::insertRec(Key key, Item item, Node* & current)
 {
-    
+    if (isLeaf(current))
+    {
+        current = new Node(key, item);
+    }
+    else if (current->key == key)
+    {
+        current->item = item;
+    }
+    else if (key < current->key)
+    {
+        insertRec(key, item, current->leftChild);
+    }
+    else if (key > current-> key)
+    {
+        insertRec(key, item, current->rightChild);
+    }
 }
 
 BST::Item* BST::lookup(Key key)
@@ -56,6 +64,7 @@ BST::Item* BST::lookup(Key key)
     //     }
     // }
     // return &node->item;
+    
     return lookupRec(key, root);
 }
 
