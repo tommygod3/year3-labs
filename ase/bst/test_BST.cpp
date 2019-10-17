@@ -4,21 +4,33 @@
 
 #include "BST.hpp"
 
-BOOST_AUTO_TEST_CASE(test_BST)
+BOOST_AUTO_TEST_CASE(object_creation)
 {
-    // Create Binary Search Tree
+    BOOST_CHECK_NO_THROW(BST testTree);
+}
+
+BOOST_AUTO_TEST_CASE(insertion)
+{
     BST testTree;
-    // Ensure inserting values at different points in the tree does not throw
     BOOST_CHECK_NO_THROW(testTree.insert(10, "ten"));
+}
 
+BOOST_AUTO_TEST_CASE(insert_lots)
+{
+    BST testTree;
+    BOOST_CHECK_NO_THROW(testTree.insert(10, "ten"));
     BOOST_CHECK_NO_THROW(testTree.insert(5, "five"));
-
     BOOST_CHECK_NO_THROW(testTree.insert(1, "one"));
-
     BOOST_CHECK_NO_THROW(testTree.insert(3, "three"));
+}
 
-    // Setup and test that lookup works
-    std::string* correctAnswer = new std::string("three");
-    BOOST_CHECK_EQUAL(*testTree.lookup(3), *correctAnswer);
-    delete correctAnswer;
+
+BOOST_AUTO_TEST_CASE(lookup)
+{
+    BST testTree;
+    BOOST_CHECK_NO_THROW(testTree.insert(10, "ten"));
+    BOOST_CHECK_NO_THROW(testTree.insert(5, "five"));
+    BOOST_CHECK_NO_THROW(testTree.insert(1, "one"));
+    BOOST_CHECK_NO_THROW(testTree.insert(3, "three"));
+    BOOST_CHECK_EQUAL(*testTree.lookup(3), "three");
 }
