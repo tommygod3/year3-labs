@@ -25,24 +25,39 @@ void swapCoordinates(Coordinate* & first, Coordinate* & second)
 }
 
 // This still isn't working...
-template < typename dataType, template < typename > class containerType>
-std::ostream & operator<<(std::ostream & os, const containerType<dataType> & container)
+template < typename dataType, template < typename, typename > class containerType, typename allocator>
+std::ostream & operator<<(std::ostream & os, const containerType<dataType, allocator> & container)
 {
     os << '[';
     
-    int size = container.size();
-    for (int i = 0; i != size; i++)
+    // int size = container.size();
+    // for (int i = 0; i != size; i++)
+    // {
+    //     if (i == size -1)
+    //     {
+    //         os << container.at(i);
+    //     }
+    //     else
+    //     {
+    //         os << container.at(i) << ',';
+    //     }
+        
+    // }
+
+    using containerClass = containerType<dataType, allocator>;
+
+    for (typename containerClass::const_iterator it = container.begin(); it != container.end(); ++it)
     {
-        if (i == size -1)
+        if (std::next(it) == container.end())
         {
-            os << container.at(i);
+            os << *it;
         }
         else
         {
-            os << container.at(i) << ',';
+            os << *it << ',';
         }
-        
     }
+
 
     os << ']';
 
