@@ -25,7 +25,7 @@ BOOST_AUTO_TEST_CASE(insert_lots)
 }
 
 
-BOOST_AUTO_TEST_CASE(lookup)
+BOOST_AUTO_TEST_CASE(lookup_match)
 {
     BST testTree;
     BOOST_CHECK_NO_THROW(testTree.insert(10, "ten"));
@@ -33,4 +33,14 @@ BOOST_AUTO_TEST_CASE(lookup)
     BOOST_CHECK_NO_THROW(testTree.insert(1, "one"));
     BOOST_CHECK_NO_THROW(testTree.insert(3, "three"));
     BOOST_CHECK_EQUAL(*testTree.lookup(3), "three");
+}
+
+BOOST_AUTO_TEST_CASE(lookup_no_match)
+{
+    BST testTree;
+    BOOST_CHECK_NO_THROW(testTree.insert(10, "ten"));
+    BOOST_CHECK_NO_THROW(testTree.insert(5, "five"));
+    BOOST_CHECK_NO_THROW(testTree.insert(1, "one"));
+    BOOST_CHECK_NO_THROW(testTree.insert(3, "three"));
+    BOOST_CHECK_EQUAL(testTree.lookup(6), nullptr);
 }
