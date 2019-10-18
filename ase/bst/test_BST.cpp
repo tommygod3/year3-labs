@@ -44,3 +44,53 @@ BOOST_AUTO_TEST_CASE(lookup_no_match)
     BOOST_CHECK_NO_THROW(testTree.insert(3, "three"));
     BOOST_CHECK_EQUAL(testTree.lookup(6), nullptr);
 }
+
+BOOST_AUTO_TEST_CASE(test_display_entries)
+{
+    BST testTree;
+
+    testTree.insert(22, "Jane");
+    testTree.insert(22, "Mary");
+    testTree.insert(0, "Harold");
+    testTree.insert(9, "Edward");
+    testTree.insert(37, "Victoria");
+    testTree.insert(4, "Matilda");
+    testTree.insert(26, "Oliver");
+    testTree.insert(42, "Elizabeth");
+    testTree.insert(19, "Henry");
+    testTree.insert(4, "Stephen");
+    testTree.insert(24, "James");
+    testTree.insert(-1, "Edward");
+    testTree.insert(31, "Anne");
+    testTree.insert(23, "Elizabeth");
+    testTree.insert(1, "William");
+    testTree.insert(26, "Charles");
+
+    BOOST_CHECK_NO_THROW(testTree.displayEntries());
+
+}
+
+BOOST_AUTO_TEST_CASE(test_display_tree)
+{
+    BST testTree;
+
+    testTree.insert(22, "Jane");
+    testTree.insert(22, "Mary");
+    testTree.insert(0, "Harold");
+    testTree.insert(9, "Edward");
+    testTree.insert(37, "Victoria");
+    testTree.insert(4, "Matilda");
+    testTree.insert(26, "Oliver");
+    testTree.insert(42, "Elizabeth");
+    testTree.insert(19, "Henry");
+    testTree.insert(4, "Stephen");
+    testTree.insert(24, "James");
+    testTree.insert(-1, "Edward");
+    testTree.insert(31, "Anne");
+    testTree.insert(23, "Elizabeth");
+    testTree.insert(1, "William");
+    testTree.insert(26, "Charles");
+
+    BOOST_CHECK_NO_THROW(testTree.displayTree());
+
+}

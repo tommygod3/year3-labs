@@ -70,16 +70,40 @@ BST::Item* BST::lookupRec(Key key, Node* node)
     }
 }
 
-BST::~BST()
+void BST::displayEntries()
 {
-    delete root;
+    inOrder(root, displayEntry);
+}
+
+void BST::displayEntry(Node* node)
+{
+    std::cout << node->key << ' ' << node->item << '\n';
+}
+
+void BST::displayTree()
+{
+    displayTreeRec(root);
+}
+
+void BST::displayTreeRec(Node* node, int depth)
+{
+    if (isLeaf(node))
+    {
+        std::cout << '*' << '\n';
+        return;
+    }
+    std::cout << std::string(depth, '.') << node->item << '\n';
+    int nextDepth = ++depth;
+    displayTreeRec(node->leftChild, nextDepth);
+    displayTreeRec(node->rightChild, nextDepth);
 }
 
 bool BST::isLeaf(Node* node)
 {
-    if (node == nullptr)
-    {
-        return true;
-    }
-    return false;
+    return node == nullptr;
+}
+
+BST::~BST()
+{
+    delete root;
 }
