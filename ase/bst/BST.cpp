@@ -72,12 +72,20 @@ BST::Item* BST::lookupRec(Key key, Node* node)
 
 void BST::displayEntries()
 {
-    inOrder(root, displayEntry);
+    // Which is better? Is this func even needed?
+
+    //std::cout << *this;
+
+    displayEntriesRec(root, std::cout);
 }
 
-void BST::displayEntry(Node* node)
+void BST::displayEntriesRec(Node* node, std::ostream & os)
 {
-    std::cout << node->key << ' ' << node->item << '\n';
+    if (isLeaf(node))
+        return;
+    displayEntriesRec(node->leftChild, os);
+    os << node->key << ' ' << node->item << '\n';
+    displayEntriesRec(node->rightChild, os);
 }
 
 void BST::displayTree()
@@ -89,7 +97,7 @@ void BST::displayTreeRec(Node* node, int depth)
 {
     if (isLeaf(node))
     {
-        std::cout << '*' << '\n';
+        std::cout << std::string(depth, '.') << '*' << '\n';
         return;
     }
     std::cout << std::string(depth, '.') << node->item << '\n';
@@ -106,4 +114,9 @@ bool BST::isLeaf(Node* node)
 BST::~BST()
 {
     delete root;
+}
+
+std::ostream & operator<<(std::ostream & os, const BST & bst)
+{
+    bst.displayEntriesRec(bst.root, os);
 }
