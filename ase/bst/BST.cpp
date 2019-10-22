@@ -102,6 +102,12 @@ void BST::removeRec(Key key, Node* & current)
         else if (current->leftChild and current->rightChild)
         {
             // has 2 children
+            BST::Node* newNode = detachMinimumNode(current->rightChild);
+            newNode->leftChild = current->leftChild;
+            newNode->rightChild = current->rightChild;
+
+            delete current;
+            current = newNode;
         }
         return;
     }
@@ -112,6 +118,24 @@ void BST::removeRec(Key key, Node* & current)
     else if (key > current-> key)
     {
         removeRec(key, current->rightChild);
+    }
+}
+
+BST::Node* BST::detachMinimumNode(Node* & node)
+{
+    // Is this most efficient way? Copying the pointer?
+    // Can't return it as we want to delete it by reference but also shift it up
+    // Would be okay if we could access parent
+    if (isLeaf(node->leftChild))
+    {
+        BST::Node* nodeCopy = new Node(node->key, node->item);
+        delete node;
+        node = nullptr;
+        return nodeCopy;
+    }
+    else
+    {
+        return detachMinimumNode(node->leftChild);
     }
 }
 

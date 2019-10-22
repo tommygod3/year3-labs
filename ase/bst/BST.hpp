@@ -33,6 +33,8 @@ class BST
         void displayTreeRec(Node* node, int depth = 0);
 
         void removeRec(Key, Node* &);
+
+        static Node* detachMinimumNode(Node* &);
 };
 
 std::ostream & operator<<(std::ostream & os, const BST & bst);
