@@ -12,12 +12,6 @@ struct BST::Node
         key = keyIn;
         item = itemIn;
     }
-
-    ~Node()
-    {
-        delete leftChild;
-        delete rightChild;
-    }
 };
 
 void BST::insert(Key key, Item item)
@@ -70,6 +64,57 @@ BST::Item* BST::lookupRec(Key key, Node* node)
     }
 }
 
+// Would it not be easier to make a "lookupNode" function whoch lookups and returns whole node?
+// It would simplify a few functions.
+void BST::remove(Key key)
+{
+    removeRec(key, root);
+}
+
+void BST::removeRec(Key key, Node* & current)
+{
+    // Key not in Tree
+    if (isLeaf(current))
+        return;
+
+    if (current->key == key)
+    {
+        if (isLeaf(current->leftChild) and isLeaf(current->rightChild))
+        {
+            delete current;
+            current = nullptr;
+        }
+        else if (isLeaf(current->leftChild) != isLeaf(current->rightChild))
+        {
+            Node* child;
+            if (current->leftChild)
+            {
+                child = current->leftChild;
+            }
+            else
+            {
+                child = current->rightChild;
+            }
+            
+            delete current;
+            current = child;
+        }
+        else if (current->leftChild and current->rightChild)
+        {
+            // has 2 children
+        }
+        return;
+    }
+    else if (key < current->key)
+    {
+        removeRec(key, current->leftChild);
+    }
+    else if (key > current-> key)
+    {
+        removeRec(key, current->rightChild);
+    }
+}
+
 void BST::displayEntries()
 {
     // Which is better? Is this func even needed?
@@ -113,7 +158,7 @@ bool BST::isLeaf(Node* node)
 
 BST::~BST()
 {
-    delete root;
+
 }
 
 std::ostream & operator<<(std::ostream & os, const BST & bst)
