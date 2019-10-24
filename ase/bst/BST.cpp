@@ -177,6 +177,9 @@ bool BST::isLeaf(Node* node)
 
 void BST::deepDelete(Node* node)
 {
+    if (isLeaf(node))
+        delete node;
+        return;
     if (not isLeaf(node->leftChild))
     {
         deepDelete(node->leftChild);
@@ -190,17 +193,29 @@ void BST::deepDelete(Node* node)
 
 BST::Node* BST::deepCopy(Node* original)
 {
+    if (isLeaf(original))
+        return nullptr;
 
+    Node* node = new Node(original->key, original->item);
+    if (not isLeaf(original->leftChild))
+    {
+        node->leftChild = deepCopy(original->leftChild);
+    }
+    if (not isLeaf(original->rightChild))
+    {
+        node->rightChild = deepCopy(original->rightChild);
+    }
+    return node;
 }
 
 BST::BST(const BST & original)
 {
-
+    this->root = deepCopy(original.root);
 }
 
 BST::~BST()
 {
-    //deepDelete(root);
+    deepDelete(root);
 }
 
 std::ostream & operator<<(std::ostream & os, const BST & bst)

@@ -180,25 +180,13 @@ BOOST_AUTO_TEST_CASE(delete_with_two_children)
 
 }
 
-BOOST_AUTO_TEST_CASE(deep_copy_constructor_destructor)
-{
-    BST* testTree = new BST();
-    testTree->insert(22, "Jane");
-    BST* testTree2 = testTree;
-
-    BOOST_CHECK_NO_THROW(delete testTree);
-
-    BOOST_CHECK_NO_THROW(delete testTree2);
-
-}
-
 BOOST_AUTO_TEST_CASE(deep_copy_constructor)
 {
-    BST* testTree = new BST();
-    testTree->insert(22, "Jane");
-    BST* testTree2 = testTree;
-    testTree->insert(2, "Will");
+    BST testTree;
+    testTree.insert(22, "Jane");
+    BST testTree2 = testTree;
+    testTree.insert(2, "Will");
 
-    BOOST_CHECK_EQUAL(testTree2->lookup(2), nullptr);
+    BOOST_CHECK_EQUAL(testTree2.lookup(2), nullptr);
 
 }
