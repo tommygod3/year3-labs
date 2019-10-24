@@ -12,6 +12,7 @@ class BST
 
     public:
         BST() = default;
+        BST(const BST &);
         ~BST();
 
         Item* lookup(Key);
@@ -32,9 +33,13 @@ class BST
         static void displayEntriesRec(Node* node, std::ostream & os);
         void displayTreeRec(Node* node, int depth = 0);
 
-        void removeRec(Key, Node* &);
+        static void removeRec(Key, Node* &);
 
         static Node* detachMinimumNode(Node* &);
+
+        static void deepDelete(Node*);
+
+        static Node* deepCopy(Node*);
 };
 
 std::ostream & operator<<(std::ostream & os, const BST & bst);

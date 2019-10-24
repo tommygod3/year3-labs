@@ -64,7 +64,7 @@ BST::Item* BST::lookupRec(Key key, Node* node)
     }
 }
 
-// Would it not be easier to make a "lookupNode" function whoch lookups and returns whole node?
+// TODO: Would it not be easier to make a "lookupNode" function which lookups and returns whole node?
 // It would simplify a few functions.
 void BST::remove(Key key)
 {
@@ -101,7 +101,6 @@ void BST::removeRec(Key key, Node* & current)
         }
         else if (current->leftChild and current->rightChild)
         {
-            // has 2 children
             BST::Node* newNode = detachMinimumNode(current->rightChild);
             newNode->leftChild = current->leftChild;
             newNode->rightChild = current->rightChild;
@@ -123,14 +122,10 @@ void BST::removeRec(Key key, Node* & current)
 
 BST::Node* BST::detachMinimumNode(Node* & node)
 {
-    // Is this most efficient way? Copying the pointer?
-    // Can't return it as we want to delete it by reference but also shift it up
-    // Would be okay if we could access parent
     if (isLeaf(node->leftChild))
     {
         BST::Node* nodeCopy = new Node(node->key, node->item);
-        delete node;
-        node = nullptr;
+        removeRec(node->key, node);
         return nodeCopy;
     }
     else
@@ -180,9 +175,32 @@ bool BST::isLeaf(Node* node)
     return node == nullptr;
 }
 
-BST::~BST()
+void BST::deepDelete(Node* node)
+{
+    if (not isLeaf(node->leftChild))
+    {
+        deepDelete(node->leftChild);
+    }
+    if (not isLeaf(node->rightChild))
+    {
+        deepDelete(node->rightChild);
+    }
+    delete node;
+}
+
+BST::Node* BST::deepCopy(Node* original)
 {
 
+}
+
+BST::BST(const BST & original)
+{
+
+}
+
+BST::~BST()
+{
+    //deepDelete(root);
 }
 
 std::ostream & operator<<(std::ostream & os, const BST & bst)
