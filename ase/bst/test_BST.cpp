@@ -2,22 +2,25 @@
 #define BOOST_TEST_DYN_LINK
 #include <boost/test/unit_test.hpp>
 
+#include <string>
 #include "BST.hpp"
+
+using bstIntString = BST<int, std::string>;
 
 BOOST_AUTO_TEST_CASE(object_creation)
 {
-    BOOST_CHECK_NO_THROW(BST testTree);
+    BOOST_CHECK_NO_THROW(bstIntString testTree);
 }
 
 BOOST_AUTO_TEST_CASE(insertion)
 {
-    BST testTree;
+    bstIntString testTree;
     BOOST_CHECK_NO_THROW(testTree.insert(10, "ten"));
 }
 
 BOOST_AUTO_TEST_CASE(insert_lots)
 {
-    BST testTree;
+    bstIntString testTree;
     BOOST_CHECK_NO_THROW(testTree.insert(10, "ten"));
     BOOST_CHECK_NO_THROW(testTree.insert(5, "five"));
     BOOST_CHECK_NO_THROW(testTree.insert(1, "one"));
@@ -27,7 +30,7 @@ BOOST_AUTO_TEST_CASE(insert_lots)
 
 BOOST_AUTO_TEST_CASE(lookup_match)
 {
-    BST testTree;
+    bstIntString testTree;
     BOOST_CHECK_NO_THROW(testTree.insert(10, "ten"));
     BOOST_CHECK_NO_THROW(testTree.insert(5, "five"));
     BOOST_CHECK_NO_THROW(testTree.insert(1, "one"));
@@ -37,7 +40,7 @@ BOOST_AUTO_TEST_CASE(lookup_match)
 
 BOOST_AUTO_TEST_CASE(lookup_no_match)
 {
-    BST testTree;
+    bstIntString testTree;
     BOOST_CHECK_NO_THROW(testTree.insert(10, "ten"));
     BOOST_CHECK_NO_THROW(testTree.insert(5, "five"));
     BOOST_CHECK_NO_THROW(testTree.insert(1, "one"));
@@ -47,7 +50,7 @@ BOOST_AUTO_TEST_CASE(lookup_no_match)
 
 BOOST_AUTO_TEST_CASE(display_entries)
 {
-    BST testTree;
+    bstIntString testTree;
 
     testTree.insert(22, "Jane");
     testTree.insert(22, "Mary");
@@ -72,7 +75,7 @@ BOOST_AUTO_TEST_CASE(display_entries)
 
 BOOST_AUTO_TEST_CASE(display_tree)
 {
-    BST testTree;
+    bstIntString testTree;
 
     testTree.insert(22, "Jane");
     testTree.insert(22, "Mary");
@@ -97,7 +100,7 @@ BOOST_AUTO_TEST_CASE(display_tree)
 
 BOOST_AUTO_TEST_CASE(delete_leaf)
 {
-    BST testTree;
+    bstIntString testTree;
 
     testTree.insert(22, "Jane");
     testTree.insert(22, "Mary");
@@ -124,7 +127,7 @@ BOOST_AUTO_TEST_CASE(delete_leaf)
 
 BOOST_AUTO_TEST_CASE(delete_with_one_child)
 {
-    BST testTree;
+    bstIntString testTree;
 
     testTree.insert(22, "Jane");
     testTree.insert(22, "Mary");
@@ -153,7 +156,7 @@ BOOST_AUTO_TEST_CASE(delete_with_one_child)
 
 BOOST_AUTO_TEST_CASE(delete_with_two_children)
 {
-    BST testTree;
+    bstIntString testTree;
 
     testTree.insert(22, "Jane");
     testTree.insert(22, "Mary");
@@ -182,11 +185,58 @@ BOOST_AUTO_TEST_CASE(delete_with_two_children)
 
 BOOST_AUTO_TEST_CASE(deep_copy_constructor)
 {
-    BST testTree;
+    bstIntString testTree;
     testTree.insert(22, "Jane");
-    BST testTree2 = testTree;
+    bstIntString testTree2 = testTree;
     testTree.insert(2, "Will");
 
     BOOST_CHECK_EQUAL(testTree2.lookup(2), nullptr);
+
+}
+
+BOOST_AUTO_TEST_CASE(deep_copy_assignment)
+{
+    bstIntString testTree;
+    bstIntString testTree2;
+    testTree.insert(22, "Jane");
+    testTree2 = testTree;
+    testTree.insert(2, "Will");
+
+    BOOST_CHECK_EQUAL(testTree2.lookup(2), nullptr);
+
+}
+
+BOOST_AUTO_TEST_CASE(move_constructor)
+{
+    bstIntString testTree;
+    testTree.insert(22, "Jane");
+    bstIntString testTree2 = std::move(testTree);
+    testTree.insert(2, "Will");
+
+    BOOST_CHECK_EQUAL(testTree.lookup(22), nullptr);
+    BOOST_CHECK_EQUAL(testTree2.lookup(2), nullptr);
+
+}
+
+BOOST_AUTO_TEST_CASE(move_assignment)
+{
+    bstIntString testTree;
+    bstIntString testTree2;
+    testTree.insert(22, "Jane");
+    testTree2 = std::move(testTree);
+    testTree.insert(2, "Will");
+
+    BOOST_CHECK_EQUAL(testTree.lookup(22), nullptr);
+    BOOST_CHECK_EQUAL(testTree2.lookup(2), nullptr);
+
+}
+
+BOOST_AUTO_TEST_CASE(template_string_int)
+{
+    BST<std::string, int> testTree;
+    testTree.insert("theAnswer", 42);
+
+    BOOST_CHECK_EQUAL(*testTree.lookup("theAnswer"), 42);
+    BOOST_CHECK_EQUAL(testTree.lookup("nothing"), nullptr);
 
 }

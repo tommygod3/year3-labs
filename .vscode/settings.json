@@ -53,7 +53,9 @@
         "set": "cpp",
         "thread": "cpp",
         "cinttypes": "cpp",
-        "typeindex": "cpp"
+        "typeindex": "cpp",
+        "cassert": "cpp",
+        "*.ipp": "cpp"
     },
     "python.pythonPath": "/home/vagrant/miniconda3/envs/ai-labs/bin/python"
 }
