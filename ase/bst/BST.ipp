@@ -61,11 +61,11 @@ typename BST<T1, T2>::Item* BST<T1, T2>::lookupRec(Key key, Node* node)
     }
     if (key < node->key)
     {
-        lookupRec(key, node->leftChild);
+        return lookupRec(key, node->leftChild);
     }
     else if (key > node->key)
     {
-        lookupRec(key, node->rightChild);
+        return lookupRec(key, node->rightChild);
     }
 }
 
