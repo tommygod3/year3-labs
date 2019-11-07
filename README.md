@@ -1,2 +1,2 @@
 # year3-labs
-Repo for consolidaing third year programming labs.
+Repo for consolidating third year programming labs.
