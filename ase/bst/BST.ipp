@@ -143,16 +143,6 @@ typename BST<T1, T2>::Node* BST<T1, T2>::detachMinimumNode(Node* & node)
 }
 
 template < typename T1, typename T2 >
-void BST<T1, T2>::displayEntries()
-{
-    // Which is better? Is this func even needed?
-
-    //std::cout << *this;
-
-    displayEntriesRec(root, std::cout);
-}
-
-template < typename T1, typename T2 >
 void BST<T1, T2>::displayEntriesRec(Node* node, std::ostream & os)
 {
     if (isLeaf(node))
@@ -295,4 +285,5 @@ template < typename T1, typename T2 >
 std::ostream & operator<<(std::ostream & os, const BST<T1, T2> & bst)
 {
     bst.displayEntriesRec(bst.root, os);
+    return os;
 }

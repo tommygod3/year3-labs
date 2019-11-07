@@ -29,7 +29,6 @@ class BST
         Item* lookup(Key);
         void insert(Key, Item);
 
-        void displayEntries();
         void displayTree();
 
         void remove(Key);

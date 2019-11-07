@@ -69,7 +69,7 @@ BOOST_AUTO_TEST_CASE(display_entries)
     testTree.insert(1, "William");
     testTree.insert(26, "Charles");
 
-    BOOST_CHECK_NO_THROW(testTree.displayEntries());
+    BOOST_CHECK_NO_THROW(std::cout << testTree);
 
 }
 
