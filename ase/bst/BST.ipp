@@ -5,13 +5,15 @@ struct BST<T1, T2>::Node
 {
     Key key;
     Item item;
+    int balanceFactor;
     Node* leftChild = nullptr;
     Node* rightChild = nullptr;
 
-    Node(Key keyIn, Item itemIn)
+    Node(Key keyIn, Item itemIn, int balanceFactorIn = 0)
     {
         key = keyIn;
         item = itemIn;
+        balanceFactor = balanceFactorIn;
     }
 };
 
@@ -132,7 +134,7 @@ typename BST<T1, T2>::Node* BST<T1, T2>::detachMinimumNode(Node* & node)
 {
     if (isLeaf(node->leftChild))
     {
-        BST<T1, T2>::Node* nodeCopy = new Node(node->key, node->item);
+        BST<T1, T2>::Node* nodeCopy = new Node(node->key, node->item, node->balanceFactor);
         removeRec(node->key, node);
         return nodeCopy;
     }
@@ -166,7 +168,7 @@ void BST<T1, T2>::displayTreeRec(Node* node, int depth)
         std::cout << std::string(depth, '.') << '*' << '\n';
         return;
     }
-    std::cout << std::string(depth, '.') << node->item << '\n';
+    std::cout << std::string(depth, '.') << node->item << " - " << node->balanceFactor << '\n';
     int nextDepth = ++depth;
     displayTreeRec(node->leftChild, nextDepth);
     displayTreeRec(node->rightChild, nextDepth);
@@ -201,7 +203,7 @@ typename BST<T1, T2>::Node* BST<T1, T2>::deepCopy(Node* original)
     if (isLeaf(original))
         return nullptr;
 
-    Node* node = new Node(original->key, original->item);
+    Node* node = new Node(original->key, original->item, original->balanceFactor);
     if (not isLeaf(original->leftChild))
     {
         node->leftChild = deepCopy(original->leftChild);
