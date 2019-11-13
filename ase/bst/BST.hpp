@@ -55,6 +55,8 @@ class BST
         static void rotateRight(Node* &);
         // The Node argument here must be an internal node and so must it's right child
         static void rotateLeft(Node* &);
+        // Return value indicates if sub-tree height decreased
+        static bool rebalance(Node* &); 
 };
 
 template < typename T1, typename T2 >

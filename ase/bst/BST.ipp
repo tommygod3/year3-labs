@@ -1,4 +1,5 @@
 #include <cassert>
+#include <algorithm>
 
 template < typename T1, typename T2 >
 struct BST<T1, T2>::Node
@@ -227,6 +228,9 @@ void BST<T1, T2>::rotateRight(Node* & localRoot)
     localRoot = a;
     a->rightChild = b;
     b->leftChild = beta;
+
+    b->balanceFactor = b->balanceFactor + 1 + std::max(a->balanceFactor, 0);
+    a->balanceFactor = a->balanceFactor + 1 + std::max(b->balanceFactor, 0);
 }
 
 template < typename T1, typename T2 >
@@ -241,6 +245,37 @@ void BST<T1, T2>::rotateLeft(Node* & localRoot)
     localRoot = b;
     b->leftChild = a;
     a->rightChild = beta;
+
+    a->balanceFactor = a->balanceFactor - 1 - std::max(b->balanceFactor, 0);
+    b->balanceFactor = b->balanceFactor - 1 - std::max(-a->balanceFactor, 0);
+}
+
+template < typename T1, typename T2 >
+bool BST<T1, T2>::rebalance(Node* & localRoot)
+{
+    if (localRoot->balanceFactor > 1)
+    {
+        if (localRoot->rightChild->balanceFactor == 1)
+        {
+
+        }
+        if (localRoot->rightChild->balanceFactor == 0)
+        {
+            
+        }
+        if (localRoot->rightChild->balanceFactor == -1)
+        {
+            
+        }
+    }
+    else if (localRoot->balanceFactor < -1)
+    {
+
+    }
+    else
+    {
+        return false;
+    }
 }
 
 template < typename T1, typename T2 >
