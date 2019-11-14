@@ -240,3 +240,19 @@ BOOST_AUTO_TEST_CASE(template_string_int)
     BOOST_CHECK_EQUAL(testTree.lookup("nothing"), nullptr);
 
 }
+
+BOOST_AUTO_TEST_CASE(rebalance)
+{
+    bstIntString testTree;
+
+    testTree.insert(1, "Jane");
+    testTree.insert(2, "Harry");
+    testTree.insert(3, "Bob");
+    testTree.insert(4, "Paul");
+    testTree.insert(5, "Greg");
+
+    testTree.displayTree();
+    testTree.testRebalance();
+    testTree.displayTree();
+
+}
