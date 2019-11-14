@@ -251,26 +251,51 @@ void BST<T1, T2>::rotateLeft(Node* & localRoot)
 }
 
 template < typename T1, typename T2 >
+void BST<T1, T2>::testRebalance()
+{
+    rebalance(root);
+}
+
+template < typename T1, typename T2 >
 bool BST<T1, T2>::rebalance(Node* & localRoot)
 {
     if (localRoot->balanceFactor > 1)
     {
         if (localRoot->rightChild->balanceFactor == 1)
         {
-
+            rotateLeft(localRoot);
+            return true;
         }
         if (localRoot->rightChild->balanceFactor == 0)
         {
-            
+            rotateLeft(localRoot);
+            return true;
         }
         if (localRoot->rightChild->balanceFactor == -1)
         {
-            
+            rotateRight(localRoot->rightChild);
+            rotateLeft(localRoot);
+            return true;
         }
     }
     else if (localRoot->balanceFactor < -1)
     {
-
+        if (localRoot->leftChild->balanceFactor == -1)
+        {
+            rotateRight(localRoot);
+            return true;
+        }
+        if (localRoot->leftChild->balanceFactor == 0)
+        {
+            rotateRight(localRoot);
+            return true;
+        }
+        if (localRoot->leftChild->balanceFactor == 1)
+        {
+            rotateLeft(localRoot->leftChild);
+            rotateRight(localRoot);
+            return true;
+        }
     }
     else
     {
@@ -297,6 +322,7 @@ BST<T1, T2> & BST<T1, T2>::operator=(const BST & original)
 template < typename T1, typename T2 >
 BST<T1, T2>::BST(BST<T1, T2> && original)
 {
+    // Is this correct? TODO
     this->root = original.root;
     original.root = nullptr;
 }
