@@ -49,6 +49,7 @@
                 "${fileDirname}/*.cpp",
                 "-o",
                 "${workspaceFolder}/ase/bin/${fileBasenameNoExtension}",
+                "-std=c++17",
                 "-lboost_unit_test_framework"
             ],
             "options": {
