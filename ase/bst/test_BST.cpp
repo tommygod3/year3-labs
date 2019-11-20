@@ -245,14 +245,24 @@ BOOST_AUTO_TEST_CASE(rebalance)
 {
     bstIntString testTree;
 
-    testTree.insert(1, "Jane");
-    testTree.insert(2, "Harry");
-    testTree.insert(3, "Bob");
-    testTree.insert(4, "Paul");
-    testTree.insert(5, "Greg");
+    testTree.insert(22, "Jane");
+    testTree.insert(22, "Mary");
+    testTree.insert(0, "Harold");
+    testTree.insert(9, "Edward");
+    testTree.insert(37, "Victoria");
+    testTree.insert(4, "Matilda");
+    testTree.insert(26, "Oliver");
+    testTree.insert(42, "Elizabeth");
+    testTree.insert(19, "Henry");
+    testTree.insert(4, "Stephen");
+    testTree.insert(24, "James");
+    testTree.insert(-1, "Edward");
+    testTree.insert(31, "Anne");
+    testTree.insert(23, "Elizabeth");
+    testTree.insert(1, "William");
+    testTree.insert(26, "Charles");
+    
 
-    testTree.displayTree();
-    testTree.testRebalance();
-    testTree.displayTree();
+    std::cout << testTree;
 
 }

@@ -24,24 +24,58 @@ void BST<T1, T2>::insert(Key key, Item item)
     insertRec(key, item, root);
 }
 
+// this is wrong
 template < typename T1, typename T2 >
-void BST<T1, T2>::insertRec(Key key, Item item, Node* & current)
+bool BST<T1, T2>::insertRec(Key key, Item item, Node* & current)
 {
     if (isLeaf(current))
     {
         current = new Node(key, item);
+        return true;
     }
     else if (current->key == key)
     {
         current->item = item;
+        return false;
     }
     else if (key < current->key)
     {
-        insertRec(key, item, current->leftChild);
+        bool subTreeHeightIncrease = insertRec(key, item, current->leftChild);
+        if (subTreeHeightIncrease)
+            current->balanceFactor = current->balanceFactor - 1;
+        if (current->balanceFactor < -1 or current->balanceFactor > 1)
+        {
+            rebalance(current);
+            return false;
+        }
+        if (subTreeHeightIncrease)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
-    else if (key > current-> key)
+    else if (key > current->key)
     {
-        insertRec(key, item, current->rightChild);
+        bool subTreeHeightIncrease = insertRec(key, item, current->rightChild);
+        if (subTreeHeightIncrease)
+            current->balanceFactor = current->balanceFactor + 1;
+
+        if (current->balanceFactor < -1 or current->balanceFactor > 1)
+        {
+            rebalance(current);
+            return false;
+        }
+        if (subTreeHeightIncrease and current->balanceFactor != 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
 
@@ -151,7 +185,7 @@ void BST<T1, T2>::displayEntriesRec(Node* node, std::ostream & os)
     if (isLeaf(node))
         return;
     displayEntriesRec(node->leftChild, os);
-    os << node->key << ' ' << node->item << '\n';
+    os << node->key << ' ' << node->item << ' ' << node->balanceFactor << '\n';
     displayEntriesRec(node->rightChild, os);
 }
 
@@ -185,8 +219,10 @@ template < typename T1, typename T2 >
 void BST<T1, T2>::deepDelete(Node* node)
 {
     if (isLeaf(node))
+    {
         delete node;
         return;
+    }
     if (not isLeaf(node->leftChild))
     {
         deepDelete(node->leftChild);
@@ -216,6 +252,7 @@ typename BST<T1, T2>::Node* BST<T1, T2>::deepCopy(Node* original)
     return node;
 }
 
+//pretty sure these are okay
 template < typename T1, typename T2 >
 void BST<T1, T2>::rotateRight(Node* & localRoot)
 {
@@ -229,7 +266,7 @@ void BST<T1, T2>::rotateRight(Node* & localRoot)
     a->rightChild = b;
     b->leftChild = beta;
 
-    b->balanceFactor = b->balanceFactor + 1 + std::max(a->balanceFactor, 0);
+    b->balanceFactor = b->balanceFactor + 1 + std::max(-a->balanceFactor, 0);
     a->balanceFactor = a->balanceFactor + 1 + std::max(b->balanceFactor, 0);
 }
 
@@ -256,6 +293,7 @@ void BST<T1, T2>::testRebalance()
     rebalance(root);
 }
 
+// half sure this is correct
 template < typename T1, typename T2 >
 bool BST<T1, T2>::rebalance(Node* & localRoot)
 {
@@ -269,7 +307,7 @@ bool BST<T1, T2>::rebalance(Node* & localRoot)
         if (localRoot->rightChild->balanceFactor == 0)
         {
             rotateLeft(localRoot);
-            return true;
+            return false;
         }
         if (localRoot->rightChild->balanceFactor == -1)
         {
@@ -288,7 +326,7 @@ bool BST<T1, T2>::rebalance(Node* & localRoot)
         if (localRoot->leftChild->balanceFactor == 0)
         {
             rotateRight(localRoot);
-            return true;
+            return false;
         }
         if (localRoot->leftChild->balanceFactor == 1)
         {

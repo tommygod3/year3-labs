@@ -40,7 +40,8 @@ class BST
         static bool isLeaf(Node*);
 
         static Item* lookupRec(Key, Node*);
-        static void insertRec(Key, Item, Node* &);
+        // Return value is true if the height of the sub-tree has increased
+        static bool insertRec(Key, Item, Node* &);
 
         static void displayEntriesRec(Node* node, std::ostream & os);
         void displayTreeRec(Node* node, int depth = 0);
