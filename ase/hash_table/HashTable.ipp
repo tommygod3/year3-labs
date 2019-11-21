@@ -53,7 +53,7 @@ void HashTable<T1, T2>::remove(Key key)
 {
     unsigned int index = HashTable::hash(key) % table.size();
     
-    for (auto node : table[index])
+    for (auto & node : table[index])
     {
         if (node.first == key)
         {
