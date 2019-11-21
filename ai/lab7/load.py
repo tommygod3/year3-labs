@@ -10,8 +10,8 @@ class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
                'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
 # Manually scale image data between 0-1
-train_images = train_images / 250
-test_images = test_images / 250
+train_images = train_images / 255
+test_images = test_images / 255
 
 # Add fourth dimension (channels) to data 
 # Channels = 1 in this dataset as greyscale

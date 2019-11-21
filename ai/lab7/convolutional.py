@@ -1,7 +1,6 @@
 import tensorflow as tf
 from tensorflow.keras import datasets, models, backend, layers
 import numpy as np
-import matplotlib.pyplot as plt
 
 # Load dataset
 fashion_mnist = datasets.fashion_mnist
@@ -12,8 +11,8 @@ class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
                'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
 # Manually scale image data between 0-1
-train_images = train_images / 250
-test_images = test_images / 250
+train_images = train_images / 255
+test_images = test_images / 255
 
 # Add fourth dimension (channels) to data 
 # Channels = 1 in this dataset as greyscale
@@ -30,7 +29,7 @@ else:
 
 # Create CNN
 model = models.Sequential()
-model.add(layers.Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)))
+model.add(layers.Conv2D(32, (3, 3), activation='relu', input_shape=input_shape))
 model.add(layers.MaxPooling2D((2, 2)))
 model.add(layers.Conv2D(64, (3, 3), activation='relu'))
 model.add(layers.MaxPooling2D((2, 2)))
