@@ -7,8 +7,22 @@
 
 using stringTable = HashTable<std::string, std::string>;
 
-BOOST_AUTO_TEST_CASE(hash)
+BOOST_AUTO_TEST_CASE(test_insert)
 {
-    BOOST_CHECK_EQUAL(stringTable::hash("hello"), 2);
+    stringTable testTable = stringTable();
+    BOOST_CHECK_NO_THROW(testTable.insert("Hello", "world"));
+}
 
+BOOST_AUTO_TEST_CASE(test_lookup)
+{
+    stringTable testTable = stringTable();
+    testTable.insert("Hello", "world");
+    BOOST_CHECK_EQUAL(*testTable.lookup("Hello"), "world");
+}
+
+BOOST_AUTO_TEST_CASE(test_remove)
+{
+    stringTable testTable = stringTable();
+    testTable.insert("Hello", "world");
+    BOOST_CHECK_NO_THROW(testTable.remove("Hello"));
 }
