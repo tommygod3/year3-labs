@@ -24,59 +24,50 @@ void BST<T1, T2>::insert(Key key, Item item)
     insertRec(key, item, root);
 }
 
-// this is wrong
 template < typename T1, typename T2 >
 bool BST<T1, T2>::insertRec(Key key, Item item, Node* & current)
 {
+
     if (isLeaf(current))
     {
         current = new Node(key, item);
         return true;
     }
-    else if (current->key == key)
-    {
-        current->item = item;
-        return false;
-    }
-    else if (key < current->key)
+    // Assert tree in balanced state
+    assert(current->balanceFactor < 2);
+    assert(current->balanceFactor > -2);
+    if (key < current->key)
     {
         bool subTreeHeightIncrease = insertRec(key, item, current->leftChild);
-        if (subTreeHeightIncrease)
-            current->balanceFactor = current->balanceFactor - 1;
-        if (current->balanceFactor < -1 or current->balanceFactor > 1)
+        if (not subTreeHeightIncrease) return false;
+        current->balanceFactor =- 1;
+        if (current->balanceFactor == -2)
         {
-            rebalance(current);
+            assert(rebalance(current));
             return false;
         }
-        if (subTreeHeightIncrease)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        else if (current->balanceFactor == -1) return true;
+        else if (current->balanceFactor == 0) return false;
+        assert(false);
     }
     else if (key > current->key)
     {
         bool subTreeHeightIncrease = insertRec(key, item, current->rightChild);
-        if (subTreeHeightIncrease)
-            current->balanceFactor = current->balanceFactor + 1;
-
-        if (current->balanceFactor < -1 or current->balanceFactor > 1)
+        if (not subTreeHeightIncrease) return false;
+        current->balanceFactor += 1;
+        if (current->balanceFactor == 2)
         {
-            rebalance(current);
+            assert(rebalance(current));
             return false;
         }
-        if (subTreeHeightIncrease and current->balanceFactor != 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        else if (current->balanceFactor == 1) return true;
+        else if (current->balanceFactor == 0) return false;
+        assert(false);
     }
+    // If we are here the key must be the same
+    assert(current->key == key);
+    current->item = item;
+    return false;
 }
 
 template < typename T1, typename T2 >
@@ -92,11 +83,7 @@ typename BST<T1, T2>::Item* BST<T1, T2>::lookupRec(Key key, Node* node)
     {
         return nullptr;
     }
-    if (node->key == key)
-    {
-        return &node->item;
-    }
-    if (key < node->key)
+    else if (key < node->key)
     {
         return lookupRec(key, node->leftChild);
     }
@@ -104,10 +91,10 @@ typename BST<T1, T2>::Item* BST<T1, T2>::lookupRec(Key key, Node* node)
     {
         return lookupRec(key, node->rightChild);
     }
+    assert(node->key == key);
+    return &node->item;
 }
 
-// TODO: Would it not be easier to make a "lookupNode" function which lookups and returns whole node?
-// It would simplify a few functions.
 template < typename T1, typename T2 >
 void BST<T1, T2>::remove(Key key)
 {
@@ -252,7 +239,6 @@ typename BST<T1, T2>::Node* BST<T1, T2>::deepCopy(Node* original)
     return node;
 }
 
-//pretty sure these are okay
 template < typename T1, typename T2 >
 void BST<T1, T2>::rotateRight(Node* & localRoot)
 {
@@ -287,13 +273,6 @@ void BST<T1, T2>::rotateLeft(Node* & localRoot)
     b->balanceFactor = b->balanceFactor - 1 - std::max(-a->balanceFactor, 0);
 }
 
-template < typename T1, typename T2 >
-void BST<T1, T2>::testRebalance()
-{
-    rebalance(root);
-}
-
-// half sure this is correct
 template < typename T1, typename T2 >
 bool BST<T1, T2>::rebalance(Node* & localRoot)
 {

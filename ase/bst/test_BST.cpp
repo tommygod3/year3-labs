@@ -241,7 +241,7 @@ BOOST_AUTO_TEST_CASE(template_string_int)
 
 }
 
-BOOST_AUTO_TEST_CASE(rebalance)
+BOOST_AUTO_TEST_CASE(test_rebalance)
 {
     bstIntString testTree;
 

@@ -33,8 +33,6 @@ class BST
 
         void remove(Key);
 
-        void testRebalance();
-
     private:
         Node* root = nullptr;
         static bool isLeaf(Node*);
