@@ -5,24 +5,49 @@
 #include <string>
 #include "HashTable.hpp"
 
-using stringTable = HashTable<std::string, std::string>;
+using intStringTable = HashTable<int, std::string>;
 
 BOOST_AUTO_TEST_CASE(test_insert)
 {
-    stringTable testTable = stringTable();
-    BOOST_CHECK_NO_THROW(testTable.insert("Hello", "world"));
+    intStringTable testTable = intStringTable();
+    BOOST_CHECK_NO_THROW(testTable.insert(10, "ten"));
+    BOOST_CHECK_NO_THROW(testTable.insert(5, "five"));
+    BOOST_CHECK_NO_THROW(testTable.insert(1, "one"));
+    BOOST_CHECK_NO_THROW(testTable.insert(3, "three"));
 }
 
 BOOST_AUTO_TEST_CASE(test_lookup)
 {
-    stringTable testTable = stringTable();
-    testTable.insert("Hello", "world");
-    BOOST_CHECK_EQUAL(*testTable.lookup("Hello"), "world");
+    intStringTable testTable = intStringTable();
+    BOOST_CHECK_NO_THROW(testTable.insert(10, "ten"));
+    BOOST_CHECK_NO_THROW(testTable.insert(5, "five"));
+    BOOST_CHECK_NO_THROW(testTable.insert(1, "one"));
+    BOOST_CHECK_NO_THROW(testTable.insert(3, "three"));
+    BOOST_CHECK_EQUAL(*testTable.lookup(3), "three");
 }
 
 BOOST_AUTO_TEST_CASE(test_remove)
 {
-    stringTable testTable = stringTable();
-    testTable.insert("Hello", "world");
-    BOOST_CHECK_NO_THROW(testTable.remove("Hello"));
+    intStringTable testTable = intStringTable();
+    
+    testTable.insert(22, "Jane");
+    testTable.insert(22, "Mary");
+    testTable.insert(0, "Harold");
+    testTable.insert(9, "Edward");
+    testTable.insert(37, "Victoria");
+    testTable.insert(4, "Matilda");
+    testTable.insert(26, "Oliver");
+    testTable.insert(42, "Elizabeth");
+    testTable.insert(19, "Henry");
+    testTable.insert(4, "Stephen");
+    testTable.insert(24, "James");
+    testTable.insert(-1, "Edward");
+    testTable.insert(31, "Anne");
+    testTable.insert(23, "Elizabeth");
+    testTable.insert(1, "William");
+    testTable.insert(26, "Charles");
+
+    BOOST_CHECK_NO_THROW(testTable.remove(31));
+
+    BOOST_CHECK_EQUAL(testTable.lookup(31), nullptr);
 }
