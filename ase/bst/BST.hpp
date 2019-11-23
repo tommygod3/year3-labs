@@ -1,4 +1,5 @@
 #include <iostream>
+#include <utility>
 
 template < typename T1, typename T2 >
 class BST
@@ -44,9 +45,12 @@ class BST
         static void displayEntriesRec(Node* node, std::ostream & os);
         void displayTreeRec(Node* node, int depth = 0);
 
-        static void removeRec(Key, Node* &);
+        // Return value is true if the height of the sub-tree has decreased
+        static bool removeRec(Key, Node* &);
 
-        static Node* detachMinimumNode(Node* &);
+        // First return value is true if the height of the sub-tree has decreased
+        // Second return value is the detatched node
+        static std::pair<bool, Node*> detachMinimumNode(Node* &);
 
         static void deepDelete(Node*);
 

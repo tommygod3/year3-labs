@@ -102,63 +102,76 @@ void BST<T1, T2>::remove(Key key)
 }
 
 template < typename T1, typename T2 >
-void BST<T1, T2>::removeRec(Key key, Node* & current)
+bool BST<T1, T2>::removeRec(Key key, Node* & current)
 {
     // Key not in Tree
-    if (isLeaf(current))
-        return;
+    if (isLeaf(current)) return false;
+    // Assert tree in balanced state
+    assert(current->balanceFactor < 2);
+    assert(current->balanceFactor > -2);
 
-    if (current->key == key)
+    if (key < current->key)
     {
-        if (isLeaf(current->leftChild) and isLeaf(current->rightChild))
-        {
-            delete current;
-            current = nullptr;
-        }
-        else if (isLeaf(current->leftChild) != isLeaf(current->rightChild))
-        {
-            Node* child;
-            if (current->leftChild)
-            {
-                child = current->leftChild;
-            }
-            else
-            {
-                child = current->rightChild;
-            }
-            
-            delete current;
-            current = child;
-        }
-        else if (current->leftChild and current->rightChild)
-        {
-            BST<T1, T2>::Node* newNode = detachMinimumNode(current->rightChild);
-            newNode->leftChild = current->leftChild;
-            newNode->rightChild = current->rightChild;
+        bool heightDecrease = removeRec(key, current->leftChild);
+        if (not heightDecrease) return false;
+        current->balanceFactor += 1;
+        if (current->balanceFactor == 0) return true;
+        if (current->balanceFactor == 1) return false;
+        if (current->balanceFactor == 2) return rebalance(current);
+    }
+    else if (key > current->key)
+    {
+        bool heightDecrease = removeRec(key, current->rightChild);
+        if (not heightDecrease) return false;
+        current->balanceFactor -= 1;
+        if (current->balanceFactor == 0) return true;
+        if (current->balanceFactor == -1) return false;
+        if (current->balanceFactor == -2) return rebalance(current);
+    }
 
-            delete current;
-            current = newNode;
-        }
-        return;
-    }
-    else if (key < current->key)
+    assert(current->key == key);
+    
+    if (isLeaf(current->leftChild) and isLeaf(current->rightChild))
     {
-        removeRec(key, current->leftChild);
+        delete current;
+        current = nullptr;
+        return true;
     }
-    else if (key > current-> key)
+    else if (isLeaf(current->leftChild) != isLeaf(current->rightChild))
     {
-        removeRec(key, current->rightChild);
+        Node* child;
+        if (current->leftChild) child = current->leftChild;
+        else child = current->rightChild;
+        
+        delete current;
+        current = child;
+        return true;
     }
+    else if (current->leftChild and current->rightChild)
+    {
+        std::pair<bool, BST<T1, T2>::Node*> returnPair = detachMinimumNode(current->rightChild);
+        bool heightDecrease = returnPair.first;
+        BST<T1, T2>::Node* newNode = returnPair.second;
+
+        newNode->leftChild = current->leftChild;
+        newNode->rightChild = current->rightChild;
+
+        delete current;
+        current = newNode;
+        return heightDecrease;
+    }
+    assert(false);
 }
 
 template < typename T1, typename T2 >
-typename BST<T1, T2>::Node* BST<T1, T2>::detachMinimumNode(Node* & node)
+std::pair<bool, typename BST<T1, T2>::Node*> BST<T1, T2>::detachMinimumNode(Node* & node)
 {
     if (isLeaf(node->leftChild))
     {
         BST<T1, T2>::Node* nodeCopy = new Node(node->key, node->item, node->balanceFactor);
-        removeRec(node->key, node);
-        return nodeCopy;
+        bool heightDecrease = removeRec(node->key, node);
+        // This does not work :( TODO
+        return std::pair<heightDecrease, nodeCopy>;
     }
     else
     {
