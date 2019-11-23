@@ -1,9 +1,12 @@
 #include <functional>
 
 template < typename T1, typename T2 >
-HashTable<T1, T2>::HashTable(unsigned int size)
+HashTable<T1, T2>::HashTable(unsigned int size, float threshold)
 {
-    this->table.resize(size);
+    table = new Table();
+    table->resize(size);
+    entriesCount = 0;
+    loadFactorThreshold = threshold;
 }
 
 template < typename T1, typename T2 >
@@ -15,10 +18,10 @@ unsigned int HashTable<T1, T2>::hash(const Key & key)
 template < typename T1, typename T2 >
 void HashTable<T1, T2>::insert(Key key, Item item)
 {
-    unsigned int index = HashTable::hash(key) % table.size();
+    unsigned int index = HashTable::hash(key) % table->size();
     bool exists = false;
 
-    for (auto node : table[index])
+    for (auto node : table->at(index))
     {
         if (node.first == key)
         {
@@ -28,16 +31,18 @@ void HashTable<T1, T2>::insert(Key key, Item item)
     }
     if (not exists)
     {
-        table[index].push_front(std::pair<Key, Item>(key, item));
+        table->at(index).push_front(Node(key, item));
+        entriesCount += 1;
+        if (loadFactor() > loadFactorThreshold) resize();
     }
 }
 
 template < typename T1, typename T2 >
 typename HashTable<T1, T2>::Item* HashTable<T1, T2>::lookup(Key key)
 {
-    unsigned int index = HashTable::hash(key) % table.size();
+    unsigned int index = HashTable::hash(key) % table->size();
     
-    for (std::pair<Key, Item> & node : table[index])
+    for (Node & node : table->at(index))
     {
         if (node.first == key)
         {
@@ -51,13 +56,40 @@ typename HashTable<T1, T2>::Item* HashTable<T1, T2>::lookup(Key key)
 template < typename T1, typename T2 >
 void HashTable<T1, T2>::remove(Key key)
 {
-    unsigned int index = HashTable::hash(key) % table.size();
+    unsigned int index = HashTable::hash(key) % table->size();
     
-    for (auto & node : table[index])
+    for (Node & node : table->at(index))
     {
         if (node.first == key)
         {
-            table[index].remove(node);
+            table->at(index).remove(node);
+            entriesCount -= 1;
         }
     }   
+}
+
+template < typename T1, typename T2 >
+float HashTable<T1, T2>::loadFactor()
+{
+    return float(entriesCount) / float(table->size());
+}
+
+template < typename T1, typename T2 >
+void HashTable<T1, T2>::resize()
+{
+    Table* oldTable = table;
+
+    table = new Table();
+    table->resize(oldTable->size() * 4);
+    entriesCount = 0;
+
+    for (Bucket bucket : *oldTable)
+    {
+        for (Node node : bucket)
+        {
+            insert(node.first, node.second);
+        }
+    }
+
+    delete oldTable;
 }

@@ -29,7 +29,7 @@ BOOST_AUTO_TEST_CASE(test_lookup)
 BOOST_AUTO_TEST_CASE(test_remove)
 {
     intStringTable testTable = intStringTable();
-    
+
     testTable.insert(22, "Jane");
     testTable.insert(22, "Mary");
     testTable.insert(0, "Harold");
@@ -50,4 +50,14 @@ BOOST_AUTO_TEST_CASE(test_remove)
     BOOST_CHECK_NO_THROW(testTable.remove(31));
 
     BOOST_CHECK_EQUAL(testTable.lookup(31), nullptr);
+}
+
+BOOST_AUTO_TEST_CASE(test_resize)
+{
+    intStringTable testTable = intStringTable();
+
+    for (unsigned int i = 0; i < 10000; i++)
+    {
+        BOOST_CHECK_NO_THROW(testTable.insert(i, "test"));
+    }
 }
