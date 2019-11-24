@@ -169,9 +169,8 @@ std::pair<bool, typename BST<T1, T2>::Node*> BST<T1, T2>::detachMinimumNode(Node
     if (isLeaf(node->leftChild))
     {
         BST<T1, T2>::Node* nodeCopy = new Node(node->key, node->item, node->balanceFactor);
-        bool heightDecrease = removeRec(node->key, node);
-        // This does not work :( TODO
-        return std::pair<heightDecrease, nodeCopy>;
+        const bool heightDecrease = removeRec(node->key, node);
+        return std::pair<bool, Node*>(heightDecrease, nodeCopy);
     }
     else
     {
@@ -327,10 +326,7 @@ bool BST<T1, T2>::rebalance(Node* & localRoot)
             return true;
         }
     }
-    else
-    {
-        return false;
-    }
+    return false;
 }
 
 template < typename T1, typename T2 >
