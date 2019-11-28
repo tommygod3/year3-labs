@@ -43,12 +43,16 @@ bool BST<T1, T2>::insertRec(Key key, Item item, Node* & current)
         current->balanceFactor =- 1;
         if (current->balanceFactor == -2)
         {
-            assert(rebalance(current));
+            bool heightDecreased = rebalance(current);
+            assert(heightDecreased);
             return false;
         }
         else if (current->balanceFactor == -1) return true;
-        else if (current->balanceFactor == 0) return false;
-        assert(false);
+        else
+        {
+            assert(current->balanceFactor == 0);
+            return false;
+        }
     }
     else if (key > current->key)
     {
@@ -57,12 +61,16 @@ bool BST<T1, T2>::insertRec(Key key, Item item, Node* & current)
         current->balanceFactor += 1;
         if (current->balanceFactor == 2)
         {
-            assert(rebalance(current));
+            bool heightDecreased = rebalance(current);
+            assert(heightDecreased);
             return false;
         }
         else if (current->balanceFactor == 1) return true;
-        else if (current->balanceFactor == 0) return false;
-        assert(false);
+        else
+        {
+            assert(current->balanceFactor == 0);
+            return false;
+        }
     }
     // If we are here the key must be the same
     assert(current->key == key);
@@ -147,8 +155,10 @@ bool BST<T1, T2>::removeRec(Key key, Node* & current)
         current = child;
         return true;
     }
-    else if (current->leftChild and current->rightChild)
+    else
     {
+        assert(current->leftChild and current->rightChild);
+        
         std::pair<bool, BST<T1, T2>::Node*> returnPair = detachMinimumNode(current->rightChild);
         bool heightDecrease = returnPair.first;
         BST<T1, T2>::Node* newNode = returnPair.second;
@@ -160,7 +170,6 @@ bool BST<T1, T2>::removeRec(Key key, Node* & current)
         current = newNode;
         return heightDecrease;
     }
-    assert(false);
 }
 
 template < typename T1, typename T2 >
@@ -348,7 +357,6 @@ BST<T1, T2> & BST<T1, T2>::operator=(const BST & original)
 template < typename T1, typename T2 >
 BST<T1, T2>::BST(BST<T1, T2> && original)
 {
-    // Is this correct? TODO
     this->root = original.root;
     original.root = nullptr;
 }
