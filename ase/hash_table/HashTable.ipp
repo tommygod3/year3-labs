@@ -21,7 +21,7 @@ void HashTable<T1, T2>::insert(Key key, Item item)
     unsigned int index = HashTable::hash(key) % table->size();
     bool exists = false;
 
-    for (auto node : table->at(index))
+    for (Node & node : table->at(index))
     {
         if (node.first == key)
         {
