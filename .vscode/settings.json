@@ -58,5 +58,5 @@
         "*.ipp": "cpp",
         "forward_list": "cpp"
     },
-    "python.pythonPath": "/home/vagrant/miniconda3/envs/ai-labs/bin/python"
+    "python.pythonPath": "/home/tgodfrey/miniconda3/envs/ai/bin/python"
 }
