@@ -48,7 +48,7 @@ model.compile(optimizer='adam',
 
 # Train model
 history = model.fit(train_images, train_labels, epochs=10, 
-                    validation_split=0.2)
+                    validation_data=(test_images, test_labels))
 
 # Evaluate
 test_loss, test_acc = model.evaluate(test_images,  test_labels, verbose=2)
