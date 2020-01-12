@@ -1,9 +1,10 @@
 #include <functional>
+#include <memory>
 
 template < typename T1, typename T2 >
 HashTable<T1, T2>::HashTable(unsigned int size, float threshold)
 {
-    table = new Table();
+    table = make_unique<Table>();
     table->resize(size);
     entriesCount = 0;
     loadFactorThreshold = threshold;

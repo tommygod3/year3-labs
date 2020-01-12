@@ -22,7 +22,6 @@ class HashTable
         using Table = std::vector<Bucket>;
         // Converts the Key into an integer to then be modulo
         static unsigned int hash(const Key &);
-        // TODO: Add unique ptr
         Table* table;
         unsigned int entriesCount;
         float loadFactor();
