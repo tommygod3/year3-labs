@@ -18,7 +18,7 @@ using std::chrono::duration_cast;
  * performs n random insertions followed by n random lookups.
  * The time taken (in milliseconds) for the lookups is returned.
  */
-milliseconds timingTest_map(unsigned long long int n)
+milliseconds timingTest_map(unsigned long long int dict_size, unsigned long long int num_lookups)
 {
    KeyItemGenerator gen = KeyItemGenerator();
    /*  If no seed value is given, each KeyItemGenerator object will
@@ -33,7 +33,7 @@ milliseconds timingTest_map(unsigned long long int n)
 
    map<int,string> dict = {};
 
-   for (unsigned long long int i = 0; i < n; ++i)
+   for (unsigned long long int i = 0; i < dict_size; ++i)
    {
        dict.insert(make_pair(gen.randomKey(),gen.randomItem()));
        /* Note: std::map::insert() differs slightly from BST::insert(),
@@ -43,7 +43,7 @@ milliseconds timingTest_map(unsigned long long int n)
 
    steady_clock::time_point startTime = steady_clock::now();
 
-   for (unsigned long long int i = 0; i < n; ++i)
+   for (unsigned long long int i = 0; i < num_lookups; ++i)
    {
        dict.find(gen.randomKey());
        /* Note: std::map::find() differs slightly from BST::lookup(),
@@ -59,13 +59,20 @@ milliseconds timingTest_map(unsigned long long int n)
 
 int main()
 {
-    const unsigned long long int n = 500000;
+    const unsigned long long int size = 500000;
 
-    milliseconds timeTaken = timingTest_map(n);
+    const unsigned long long int lookups = 50000;
+
+    
 
     cout << "Data structure: std::map (red-black tree)" << endl;
-    cout << "Testing " << n << " random lookups in a dictionary containing " << n << " random entries." << endl;
-    cout << "Time taken: " << timeTaken.count() << " milliseconds." << endl;
+    for (int i = 1; i < 11; i++)
+    {
+        milliseconds timeTaken = timingTest_map(size*i, lookups);
+        cout << "Testing " << lookups << " random lookups in a dictionary containing " << size*i << " random entries." << endl;
+        cout << "Time taken: " << timeTaken.count() << " milliseconds." << endl;
+    }
+
 
     return 0;
 }
