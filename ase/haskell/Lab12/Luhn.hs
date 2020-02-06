@@ -1,4 +1,4 @@
-module Lab12 where
+module Luhn where
 import Data.Char(digitToInt)
 
 luhnDouble :: Int -> Int
@@ -13,6 +13,8 @@ luhnDoubleList :: [Int] -> [Int]
 luhnDoubleList xs = fst $ foldr (\x (acc, bool) ->
                                   ((if bool then luhnDouble x else x) : acc,
                                    not bool)) ([], False) xs
+
+luhnDoubleListEasy :: [Int] -> Int
 
 luhnString :: String -> Bool
 luhnString s = luhn (map digitToInt s)

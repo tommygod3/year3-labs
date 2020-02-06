@@ -12,3 +12,7 @@ lengthList (h : t) = 1 + lengthList t
 lengthList l = if null l
                    then 0
                    else 1 + lengthList (tail l)
+
+sumList :: [Int] -> Int
+sumList [] = 0
+sumList (h : t) = h + sumList t
